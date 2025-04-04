@@ -128,14 +128,41 @@ namespace Assets.Scripts.Emulation
 
     public struct FlagsRegister
     {
+        /// <summary>
+        /// Carry Flag
+        /// </summary>
         public bool CF;
+        /// <summary>
+        /// Parity Flag
+        /// </summary>
         public bool PF;
+        /// <summary>
+        /// Auxiliary Carry Flag
+        /// </summary>
         public bool AF;
+        /// <summary>
+        /// Zero Flag
+        /// </summary>
         public bool ZF;
+        /// <summary>
+        /// Sign Flag
+        /// </summary>
         public bool SF;
+        /// <summary>
+        /// Trap Flag
+        /// </summary>
         public bool TF;
+        /// <summary>
+        /// Interrupt Enable Flag
+        /// </summary>
         public bool IF;
+        /// <summary>
+        /// Direction Flag
+        /// </summary>
         public bool DF;
+        /// <summary>
+        /// Overflow Flag
+        /// </summary>
         public bool OF;
     }
 }
