@@ -8,6 +8,33 @@ namespace Assets.Scripts.Emulation
 {
     public class Registers
     {
+        public enum Register
+        {
+            R8_AL,
+            R8_BL,
+            R8_CL,
+            R8_DL,
+            
+            R8_AH,
+            R8_BH,
+            R8_CH,
+            R8_DH,
+            
+            R16_AX,
+            R16_BX,
+            R16_CX,
+            R16_DX,
+
+            R16_BP,
+            R16_SP,
+            
+            R16_SI,
+            R16_DI,
+
+            R16_DS,
+            R16_SS,
+        }
+
         public ushort AX; //(primary accumulator)
         public ushort BX; //(base, accumulator)
         public ushort CX; //(counter, accumulator)
@@ -18,11 +45,11 @@ namespace Assets.Scripts.Emulation
         public ushort BP; //Base Pointer
         public ushort SP; //Stack Pointer
 
-        public ushort IP; //Instruction Pointer/Program Counter
+        //public ushort IP; //Instruction Pointer/Program Counter
 
-        public ushort CS; //Code Segment
+        //public ushort CS; //Code Segment
         public ushort DS; //Data Segment
-        public ushort ES; //Extra Segment
+        //public ushort ES; //Extra Segment
         public ushort SS; //Stack Segment
 
         public FlagsRegister Flags;

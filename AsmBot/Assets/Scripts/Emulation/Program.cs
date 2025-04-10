@@ -7,15 +7,10 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Emulation
 {
-    internal class Program
+    public class Program
     {
-        public List<string> Lines { get; }
-        private Dictionary<string,int> labels = new Dictionary<string,int>();
-
-        public Program(string program)
-        {
-            
-        }
+        public List<Instruction> Instructions { get; } = new();
+        public Dictionary<string, int> Labels { get; } = new();
 
         public void Step(CPU cpu)
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Emulation.Instructions.Operands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -47,6 +48,11 @@ namespace Assets.Scripts.Emulation.Parsing
                 //TODO: try to actually parse as a number and throw error
                 return;
             }
+            if (IsRegister(value))
+            {
+                Type = TokenType.Register;
+                return;
+            }
             if (value[value.Length - 1] == 'h')
             {
                 if (ParsingUtil.IsHex(value.Substring(0, value.Length - 1)))
@@ -58,11 +64,30 @@ namespace Assets.Scripts.Emulation.Parsing
             //TODO: check for known instruction names (get from reflection aswell?)
             Type = TokenType.Symbol;
         }
+
+        public override string ToString()
+        {
+            return $"[{Type}]:{Value}";
+        }
+
+        private static bool IsRegister(string value)
+        {
+            //TODO: this sucks, but at least i dont have seperate lists of what is a register and what isnt
+            try
+            {
+                var tmp = new RegisterOperand(value);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 
     public enum TokenType
     {
-        Unknown=0,
+        Unknown = 0,
         Instruction,
         Symbol,
         Label,
@@ -75,5 +100,6 @@ namespace Assets.Scripts.Emulation.Parsing
         Comma,
         String,
         NewLine,
+        Register,
     }
 }

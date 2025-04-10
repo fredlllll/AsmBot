@@ -22,41 +22,7 @@ namespace Assets.Scripts.Emulation
 
         public void Step()
         {
-            byte opcode = FetchNextCodeByte();
-            Execute(opcode);
-        }
 
-        public byte FetchNextCodeByte()
-        {
-            uint globalAddress = EmuUtil.ConvertAddress(registers.CS, registers.IP);
-            byte opcode = memory.ReadByte(globalAddress);
-            registers.IP++;
-            return opcode;
-        }
-
-        private void Execute(byte opcode)
-        {
-            switch (opcode)
-            {
-                case 0xB8: // MOV AX, imm16
-                    registers.AX = memory.ReadWord(EmuUtil.ConvertAddress(registers.CS,registers.IP));
-                    registers.IP += 2;
-                    break;
-
-                case 0xE9: // JMP rel16
-                    short offset = (short)memory.ReadWord(((uint)registers.CS << 4) + registers.IP);
-                    registers.IP = (ushort)(registers.IP + offset);
-                    break;
-
-                case 0xCD: // INT n
-                    byte interruptNum = FetchNextCodeByte();
-                    HandleInterrupt(interruptNum);
-                    break;
-
-                default:
-                    UnityEngine.Debug.Log($"Unimplemented opcode: {opcode:X2}");
-                    break;
-            }
         }
 
         private void HandleInterrupt(byte interruptNum)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Emulation.Instructions
 {
-    [InstructionMnemonic("ADD")]
+    [InstructionInfo("ADD",2)]
     public class Add : Instruction
     {
         public Add(Operand[] operands) : base(operands) { }

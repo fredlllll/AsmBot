@@ -55,7 +55,7 @@ namespace Assets.Scripts.Emulation
                         3 => (uint)(cpu.registers.DS << 16 + cpu.registers.BP + cpu.registers.DI),
                         4 => (uint)(cpu.registers.DS << 16 + cpu.registers.SI),
                         5 => (uint)(cpu.registers.DS << 16 + cpu.registers.DI),
-                        6 => (uint)(cpu.registers.DS << 16 + cpu.FetchNextCodeByte() << 8 + cpu.FetchNextCodeByte()),
+                        //6 => (uint)(cpu.registers.DS << 16 + cpu.FetchNextCodeByte() << 8 + cpu.FetchNextCodeByte()),
                         7 => (uint)(cpu.registers.DS << 16 + cpu.registers.BX),
                         _ => throw new NotImplementedException()
                     };

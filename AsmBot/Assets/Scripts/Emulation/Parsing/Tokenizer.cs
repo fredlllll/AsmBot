@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Emulation.Instructions.Operands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace Assets.Scripts.Emulation.Parsing
             var tokens = new List<Token>();
             for (int lineNumber = 1; lineNumber <= lines.Count; lineNumber++)
             {
-                string line = lines[lineNumber];
+                string line = lines[lineNumber-1];
                 if (string.IsNullOrEmpty(line))
                 {
                     continue;
@@ -25,7 +26,6 @@ namespace Assets.Scripts.Emulation.Parsing
                 StringBuilder currentToken = new StringBuilder();
                 char stringStartChar = '\0';
                 bool inString = false;
-                bool firstToken = true;
 
                 for (int pos = 0; pos < line.Length; ++pos)
                 {
@@ -124,6 +124,23 @@ namespace Assets.Scripts.Emulation.Parsing
                 }
                 tokens.Add(new Token(TokenType.NewLine, "\n"));
             }
+
+            //make every first symbol after a newline an instruction
+            if (tokens[0].Type == TokenType.Symbol)
+            {
+                tokens[0].Type = TokenType.Instruction;
+            }
+            for (int i =0; i < tokens.Count; i++)
+            {
+                var token = tokens[i];
+                if(token.Type == TokenType.NewLine && i+1 < tokens.Count) {
+                    if (tokens[i+1].Type == TokenType.Symbol)
+                    {
+                        tokens[i+1].Type = TokenType.Instruction;
+                    }
+                }
+            }
+
             return tokens;
         }
     }

@@ -10,7 +10,7 @@ namespace Assets.Scripts.Emulation.Parsing
     {
         public static List<string> Process(string input)
         {
-            string[] lines = input.Split('\n');
+            string[] lines = input.Trim().Split('\n');
 
             List<string> processedLines = new List<string>();
 

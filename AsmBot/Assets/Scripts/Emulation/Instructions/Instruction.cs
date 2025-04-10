@@ -19,9 +19,13 @@ namespace Assets.Scripts.Emulation.Instructions
         public abstract void Execute(CPU cpu);
     }
 
-    public class InstructionMnemonicAttribute : System.Attribute
+    public class InstructionInfoAttribute : System.Attribute
     {
         public readonly string mnemonic;
-        public InstructionMnemonicAttribute(string mnemonic) { this.mnemonic = mnemonic.ToUpper(); }
+        public readonly int operandCount;
+        public InstructionInfoAttribute(string mnemonic, int operandCount) { 
+            this.mnemonic = mnemonic.ToUpper(); 
+            this.operandCount = operandCount;
+        }
     }
 }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Emulation.Instructions.Operands
 {
-    public class Operand
+    public abstract class Operand
     {
-        public byte GetByte() { return 0; }
-        public ushort GetWord() { return 0; }
-        public void SetByte(byte value) { }
-        public void SetWord(ushort value) { }
+        public virtual byte GetByte(CPU cpu) { return 0; }
+        public virtual ushort GetWord(CPU cpu) { return 0; }
+        public virtual void SetByte(CPU cpu, byte value) { }
+        public virtual void SetWord(CPU cpu, ushort value) { }
     }
 }
