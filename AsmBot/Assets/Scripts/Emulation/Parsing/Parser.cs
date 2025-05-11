@@ -72,9 +72,23 @@ namespace Assets.Scripts.Emulation.Parsing
                     {
                         retval[i++] = new NumberOperand(token.Value);
                     }
-                    else
+                    else if(token.Type == TokenType.LeftBracket)
                     {
-                        //TODO: also handle [ax] [bp+5] etc
+                        //we only handle [ax] stuff, no immediate offset, as that can be done by adding to ax before (for now)
+                        token = GetNextToken();
+                        if (token.Type != TokenType.Register)
+                        {
+                            throw new Exception("expected register, got: " + token.Type);
+                        }
+                        retval[i++] = new AddressOperand(token.Value);
+                        token = GetNextToken();
+                        if (token.Type != TokenType.RightBracket)
+                        {
+                            throw new Exception("expected right bracket, got: " + token.Type);
+                        }
+                    }
+                    else 
+                    {
                         throw new Exception("unknown operand type: " + token.Type);
                     }
                     var next = GetNextToken(); //either comma or newline
@@ -128,7 +142,10 @@ namespace Assets.Scripts.Emulation.Parsing
                 {
                     if (instructionInfos.TryGetValue(token.Value.ToUpper(), out var instructionInfo))
                     {
-                        var instruction = Activator.CreateInstance(instructionInfo.instructionType, new object[] { state.GetOperands(instructionInfo.instructionInfo.operandCount) });
+                        var instruction = Activator.CreateInstance(
+                            instructionInfo.instructionType,
+                            new object[] { state.GetOperands(instructionInfo.instructionInfo.operandCount) }
+                            );
                         if (instruction != null)
                         {
                             program.Instructions.Add((Instruction)instruction);

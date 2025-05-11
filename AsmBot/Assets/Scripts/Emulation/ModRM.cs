@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Emulation
 {
-
+    /*
 
     public struct ModRM
     {
@@ -70,5 +70,5 @@ namespace Assets.Scripts.Emulation
             }
             throw new NotImplementedException();
         }
-    }
+    }*/
 }

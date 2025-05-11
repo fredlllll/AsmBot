@@ -20,5 +20,15 @@ namespace Assets.Scripts.Emulation.Instructions.Operands
                 value = ushort.Parse(str);
             }
         }
+
+        public override byte GetByte(CPU cpu) { return (byte)value; }
+        public override ushort GetWord(CPU cpu) { return value; }
+        public override void SetByte(CPU cpu, byte value) { throw new InvalidOperationException("cant set constant"); }
+        public override void SetWord(CPU cpu, ushort value) { throw new InvalidOperationException("cant set constant"); }
+
+        public override OperandSize GetSize()
+        {
+            return OperandSize.Any;
+        }
     }
 }

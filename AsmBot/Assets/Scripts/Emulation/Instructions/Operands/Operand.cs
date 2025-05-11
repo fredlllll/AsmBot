@@ -12,5 +12,12 @@ namespace Assets.Scripts.Emulation.Instructions.Operands
         public virtual ushort GetWord(CPU cpu) { return 0; }
         public virtual void SetByte(CPU cpu, byte value) { }
         public virtual void SetWord(CPU cpu, ushort value) { }
+        public virtual OperandSize GetSize() { return OperandSize.Any; }
+    }
+    public enum OperandSize
+    {
+        Any = 0,
+        _8Bits = 1,
+        _16Bits = 2,
     }
 }

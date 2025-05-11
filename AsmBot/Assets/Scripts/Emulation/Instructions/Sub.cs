@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Emulation.Instructions
 {
-    [InstructionInfo("ADD",2)]
-    public class Add : Instruction
+    [InstructionInfo("SUB",2)]
+    public class Sub : Instruction
     {
-        public Add(Operand[] operands) : base(operands) { }
+        public Sub(Operand[] operands) : base(operands) { }
 
         //sets OF,CF,ZF,SF
 
@@ -18,7 +18,7 @@ namespace Assets.Scripts.Emulation.Instructions
         {
             var b1 = destination.GetByte(cpu);
             var b2 = source.GetByte(cpu);
-            var result = b1 + b2;
+            var result = b1 - b2;
 
             cpu.registers.Flags.CF = ((byte)result) != result;
             cpu.registers.Flags.OF = ((sbyte)result) != result;
@@ -32,7 +32,7 @@ namespace Assets.Scripts.Emulation.Instructions
         {
             var w1 = destination.GetWord(cpu);
             var w2 = source.GetWord(cpu);
-            var result = w1 + w2;
+            var result = w1 - w2;
 
             cpu.registers.Flags.CF = ((ushort)result) != result;
             cpu.registers.Flags.OF = ((short)result) != result;

@@ -36,7 +36,7 @@ convertSectorToCHS: ; sectors in DX:AX, SectorsPerTrack[top of stack] and Heads 
     ret
             ";
 
-        programText = @"add ax,ax
+        programText = @"add ax,[ax]
 add bx,5
 add cx,aah";
 
@@ -56,17 +56,5 @@ add cx,aah";
     void Update()
     {
         //cpu.Step();
-    }
-
-    void LoadProgram()
-    {
-        // Example: MOV AX, 1234h; INT 10h
-        byte[] program = { 0xB8, 0x34, 0x12, 0xCD, 0x10 };
-        for (int i = 0; i < program.Length; i++)
-        {
-            memory.WriteByte(0x7C00 + (uint)i, program[i]);
-        }
-        //registers.CS = 0x0000;
-        //registers.IP = 0x7C00; // Typical boot sector location
     }
 }
