@@ -1,7 +1,11 @@
+using Antlr4.Runtime.Tree;
+using Antlr4.Runtime;
 using Assets.Scripts.Emulation;
 using Assets.Scripts.Emulation.Parsing;
+using System;
 using System.Text;
 using UnityEngine;
+using Assets.Scripts.Emulation.Compiling;
 
 public class Robot : MonoBehaviour
 {
@@ -36,22 +40,44 @@ convertSectorToCHS: ; sectors in DX:AX, SectorsPerTrack[top of stack] and Heads 
     ret
             ";
 
-        programText = @"add ax,[ax]
+        /*programText = @"add ax,[ax]
 add bx,5
 add cx,aah
 loop:
-jmp loop";
+jmp loop";*/
 
-        var lines = Preprocessor.Process(programText);
-        var tokens = Tokenizer.Tokenize(lines);
-        var program = Parser.Parse(tokens);
+        ICharStream stream = CharStreams.fromString(programText);
+        ITokenSource lexer = new asmbotGrammarLexer(stream);
+        ITokenStream tokens = new CommonTokenStream(lexer);
+        asmbotGrammarParser parser = new asmbotGrammarParser(tokens);
+        //IParseTree tree = parser.StartRule()
+        IParseTree tree = parser.prog();
+        AsmbotGrammarListener listener = new AsmbotGrammarListener();
+        ParseTreeWalker.Default.Walk(listener, tree);
+
+
+
+        //var lines = Preprocessor.Process(programText);
+        //var tokens = Tokenizer.Tokenize(lines);
+        //var program = Parser.Parse(tokens);
 
         StringBuilder sb = new();
-        foreach (var token in tokens)
+        foreach (var line in listener.programLines)
         {
-            sb.AppendLine(token.ToString());
+            sb.AppendLine(line.ToString());
         }
-
+        /*for (int i = 0; ; i++)
+        {
+            try
+            {
+                sb.AppendLine(tokens.Get(i).Text);
+            }
+            catch
+            {
+                break;
+            }
+        }*/
+        Debug.Log(listener.tokenNames);
         Debug.Log(sb);
     }
 
