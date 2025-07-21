@@ -87,6 +87,10 @@ namespace Assets.Scripts.Emulation.Parsing
                             throw new Exception("expected right bracket, got: " + token.Type);
                         }
                     }
+                    else if(token.Type == TokenType.Label)
+                    {
+
+                    }
                     else 
                     {
                         throw new Exception("unknown operand type: " + token.Type);

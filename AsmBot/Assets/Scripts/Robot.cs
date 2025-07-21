@@ -38,7 +38,9 @@ convertSectorToCHS: ; sectors in DX:AX, SectorsPerTrack[top of stack] and Heads 
 
         programText = @"add ax,[ax]
 add bx,5
-add cx,aah";
+add cx,aah
+loop:
+jmp loop";
 
         var lines = Preprocessor.Process(programText);
         var tokens = Tokenizer.Tokenize(lines);
