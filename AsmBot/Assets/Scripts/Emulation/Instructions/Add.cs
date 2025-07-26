@@ -1,13 +1,15 @@
-﻿using Assets.Scripts.Emulation.Instructions.Operands;
+﻿using Assets.Scripts.Emulation.Compiling;
+using Assets.Scripts.Emulation.Instructions.Operands;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Assets.Scripts.Emulation.Instructions
 {
-    [InstructionInfo("ADD",2)]
+    [InstructionInfo(MnemonicOpCode.ADD)]
     public class Add : Instruction
     {
         public Add(Operand[] operands) : base(operands) { }
@@ -22,8 +24,8 @@ namespace Assets.Scripts.Emulation.Instructions
 
             cpu.registers.Flags.CF = ((byte)result) != result;
             cpu.registers.Flags.OF = ((sbyte)result) != result;
-            cpu.registers.Flags.ZF =  result == 0;
-            cpu.registers.Flags.SF = (result & 0b10000000) != 0;
+            cpu.registers.Flags.ZF = result == 0;
+            cpu.registers.Flags.SF = (result & 0x80) != 0;
 
             destination.SetByte(cpu, (byte)result);
         }
@@ -37,7 +39,7 @@ namespace Assets.Scripts.Emulation.Instructions
             cpu.registers.Flags.CF = ((ushort)result) != result;
             cpu.registers.Flags.OF = ((short)result) != result;
             cpu.registers.Flags.ZF = result == 0;
-            cpu.registers.Flags.SF = (result & 0b10000000) != 0;
+            cpu.registers.Flags.SF = (result & 0x8000) != 0;
 
             destination.SetWord(cpu, (ushort)result);
         }

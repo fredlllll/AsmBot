@@ -9,11 +9,12 @@ namespace Assets.Scripts.Emulation
     public class Memory
     {
         private readonly byte[] memory;
+        public byte[] Data { get { return memory; } }
 
         public uint StartAddress { get; }
         public uint EndAddress { get; }
 
-        public Memory(uint startAddress = 0, uint size = 0x100000)
+        public Memory(uint startAddress = 0, uint size = 0xFFFF)
         {
             StartAddress = startAddress;
             EndAddress = startAddress + size-1;

@@ -1,7 +1,6 @@
 using Antlr4.Runtime.Tree;
 using Antlr4.Runtime;
 using Assets.Scripts.Emulation;
-using Assets.Scripts.Emulation.Parsing;
 using System;
 using System.Text;
 using UnityEngine;
@@ -46,39 +45,9 @@ add cx,aah
 loop:
 jmp loop";*/
 
-        ICharStream stream = CharStreams.fromString(programText);
-        ITokenSource lexer = new asmbotGrammarLexer(stream);
-        ITokenStream tokens = new CommonTokenStream(lexer);
-        asmbotGrammarParser parser = new asmbotGrammarParser(tokens);
-        //IParseTree tree = parser.StartRule()
-        IParseTree tree = parser.prog();
-        AsmbotGrammarListener listener = new AsmbotGrammarListener();
-        ParseTreeWalker.Default.Walk(listener, tree);
-
-
-
-        //var lines = Preprocessor.Process(programText);
-        //var tokens = Tokenizer.Tokenize(lines);
-        //var program = Parser.Parse(tokens);
-
-        StringBuilder sb = new();
-        foreach (var line in listener.programLines)
-        {
-            sb.AppendLine(line.ToString());
-        }
-        /*for (int i = 0; ; i++)
-        {
-            try
-            {
-                sb.AppendLine(tokens.Get(i).Text);
-            }
-            catch
-            {
-                break;
-            }
-        }*/
-        Debug.Log(listener.tokenNames);
-        Debug.Log(sb);
+        var programBytes = Compiler.Compile(programText);
+        Debug.Log("byte count: "+programBytes.Length);
+        Debug.Log(BitConverter.ToString(programBytes));
     }
 
     void Update()

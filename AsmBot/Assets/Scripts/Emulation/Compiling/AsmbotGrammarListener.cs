@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static UnityEngine.Rendering.DebugUI;
 using UnityEngine.Rendering;
+using Assets.Scripts.Emulation.Instructions.Operands;
 
 namespace Assets.Scripts.Emulation.Compiling
 {
@@ -33,7 +34,7 @@ namespace Assets.Scripts.Emulation.Compiling
 
         public override void EnterInstr([NotNull] asmbotGrammarParser.InstrContext context)
         {
-            programLines.Add(currentInstruction = new InstructionLine() { Mnemonic = context.GetChild(0).GetText()});
+            programLines.Add(currentInstruction = new InstructionLine() { Mnemonic = context.GetChild(0).GetText() });
         }
 
         public override void ExitInstr([NotNull] asmbotGrammarParser.InstrContext context)
@@ -49,7 +50,7 @@ namespace Assets.Scripts.Emulation.Compiling
             }
             if (isInMemoryOperand)
             {
-                currentInstruction.Operands.Add(new MemoryLabelOperand() { Label = context.GetText() });
+                currentInstruction.Operands.Add(new MemoryLabelOperand(context.GetText()));
             }
         }
 
@@ -57,7 +58,7 @@ namespace Assets.Scripts.Emulation.Compiling
         {
             if (currentInstruction != null)
             {
-                currentInstruction.Operands.Add(new RegisterOperand() { Register = Registers.RegisterNameToRegister(context.GetText()) });
+                currentInstruction.Operands.Add(new RegisterOperand(RegistersUtil.RegisterNameToRegister(context.GetText())));
             }
         }
 
@@ -75,7 +76,7 @@ namespace Assets.Scripts.Emulation.Compiling
         {
             if (isInMemoryOperand)
             {
-                currentInstruction.Operands.Add(new MemoryRegisterOperand() { Register = Registers.RegisterNameToRegister(context.GetText()) });
+                currentInstruction.Operands.Add(new MemoryRegisterOperand(RegistersUtil.RegisterNameToRegister(context.GetText())));
             }
         }
 
@@ -83,7 +84,7 @@ namespace Assets.Scripts.Emulation.Compiling
         {
             if (currentInstruction != null)
             {
-                currentInstruction.Operands.Add(new LabelOperand() { Label = context.GetText() });
+                currentInstruction.Operands.Add(new LabelOperand(context.GetText()));
             }
         }
 
@@ -101,7 +102,7 @@ namespace Assets.Scripts.Emulation.Compiling
                 {
                     value = ushort.Parse(str);
                 }
-                currentInstruction.Operands.Add(new ImmediateOperand() { Value = value });
+                currentInstruction.Operands.Add(new ImmediateOperand(value));
             }
 
         }

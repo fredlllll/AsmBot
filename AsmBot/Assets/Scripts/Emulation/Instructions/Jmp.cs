@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Emulation.Instructions
 {
-    [InstructionInfo("JMP", 1)]
+    [InstructionInfo(MnemonicOpCode.JMP)]
     public class Jmp : Instruction
     {
         public Jmp(Operand[] operands) : base(operands) { }
@@ -18,14 +18,13 @@ namespace Assets.Scripts.Emulation.Instructions
             switch (source.GetSize())
             {
                 case OperandSize._8Bits:
-                    UnityEngine.Debug.Log("Dbg/8: " + source.GetByte(cpu));
+                    cpu.registers.IP = source.GetByte(cpu);
                     break;
                 case OperandSize._16Bits:
-                    UnityEngine.Debug.Log("Dbg/16: " + source.GetWord(cpu));
+                    cpu.registers.IP = source.GetWord(cpu);
                     break;
-                case OperandSize.Any:
-                    UnityEngine.Debug.Log("Dbg/8|16: " + source.GetByte(cpu) + " | " + source.GetWord(cpu));
-                    break;
+                default:
+                    throw new Exception("cant determine operator size");
             }
         }
     }

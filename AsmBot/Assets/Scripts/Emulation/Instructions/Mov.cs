@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Emulation.Instructions
 {
-    [InstructionInfo("MOV", 2)]
+    [InstructionInfo(MnemonicOpCode.MOV)]
     public class Mov : Instruction
     {
         public Mov(Operand[] operands) : base(operands) { }

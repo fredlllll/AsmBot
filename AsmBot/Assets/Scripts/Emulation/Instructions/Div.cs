@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Emulation.Instructions
 {
-    [InstructionInfo("DIV", 1)]
+    [InstructionInfo(MnemonicOpCode.DIV)]
     public class Div : Instruction
     {
         public Div(Operand[] operands) : base(operands) { }
@@ -34,7 +34,7 @@ FI;
 
         private void Execute8Bit(CPU cpu, Operand opDivisor)
         {
-            var dividend = cpu.registers.GetRegisterWord(Registers.Register.R16_AX);
+            var dividend = cpu.registers.GetRegisterWord(Register.R16_AX);
             var divisor = opDivisor.GetByte(cpu);
             if (divisor == 0)
             {
@@ -47,13 +47,13 @@ FI;
                 throw new Exception("TODO: divide error");
             }
 
-            cpu.registers.SetRegisterByte(Registers.Register.R8_AL, (byte)result);
-            cpu.registers.SetRegisterByte(Registers.Register.R8_AH, (byte)remainder);
+            cpu.registers.SetRegisterByte(Register.R8_AL, (byte)result);
+            cpu.registers.SetRegisterByte(Register.R8_AH, (byte)remainder);
         }
 
         private void Execute16Bit(CPU cpu, Operand opDivisor)
         {
-            long dividend = (cpu.registers.GetRegisterWord(Registers.Register.R16_DX) << 16) & cpu.registers.GetRegisterWord(Registers.Register.R16_AX);
+            long dividend = (cpu.registers.GetRegisterWord(Register.R16_DX) << 16) & cpu.registers.GetRegisterWord(Register.R16_AX);
             var divisor = opDivisor.GetWord(cpu);
             if (divisor == 0)
             {
@@ -65,8 +65,8 @@ FI;
                 throw new Exception("TODO: divide error");
             }
 
-            cpu.registers.SetRegisterWord(Registers.Register.R16_AX, (ushort)result);
-            cpu.registers.SetRegisterWord(Registers.Register.R16_DX, (ushort)remainder);
+            cpu.registers.SetRegisterWord(Register.R16_AX, (ushort)result);
+            cpu.registers.SetRegisterWord(Register.R16_DX, (ushort)remainder);
         }
 
         public override void Execute(CPU cpu)

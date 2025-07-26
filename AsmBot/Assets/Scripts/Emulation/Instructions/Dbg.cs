@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Emulation.Instructions
 {
-    [InstructionInfo("DBG", 1)]
+    [InstructionInfo(MnemonicOpCode.DBG)]
     public class Dbg : Instruction
     {
         public Dbg(Operand[] operands) : base(operands) { }
@@ -19,13 +19,13 @@ namespace Assets.Scripts.Emulation.Instructions
             switch (source.GetSize())
             {
                 case OperandSize._8Bits:
-                    Debug.Log("Dbg/8: "+source.GetByte(cpu));
+                    Debug.Log("Dbg/8: " + source.GetByte(cpu));
                     break;
                 case OperandSize._16Bits:
                     Debug.Log("Dbg/16: " + source.GetWord(cpu));
                     break;
                 case OperandSize.Any:
-                    Debug.Log("Dbg/8|16: " + source.GetByte(cpu)+" | "+ source.GetWord(cpu));
+                    Debug.Log("Dbg/8|16: " + source.GetByte(cpu) + " | " + source.GetWord(cpu));
                     break;
             }
         }

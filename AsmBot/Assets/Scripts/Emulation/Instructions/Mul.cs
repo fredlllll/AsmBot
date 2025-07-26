@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Emulation.Instructions
 {
-    [InstructionInfo("MUL", 1)]
+    [InstructionInfo(MnemonicOpCode.MUL)]
     public class Mul : Instruction
     {
         public Mul(Operand[] operands) : base(operands) { }
@@ -23,25 +23,25 @@ FI
 
         private void Execute8Bit(CPU cpu, Operand multiplier)
         {
-            var b1 = cpu.registers.GetRegisterByte(Registers.Register.R8_AL);
+            var b1 = cpu.registers.GetRegisterByte(Register.R8_AL);
             var b2 = multiplier.GetByte(cpu);
             var result = b1 * b2;
 
             cpu.registers.Flags.CF = cpu.registers.Flags.OF = result > byte.MaxValue;
 
-            cpu.registers.SetRegisterWord(Registers.Register.R16_AX, (ushort)result);
+            cpu.registers.SetRegisterWord(Register.R16_AX, (ushort)result);
         }
 
         private void Execute16Bit(CPU cpu, Operand multiplier)
         {
-            uint w1 = cpu.registers.GetRegisterWord(Registers.Register.R16_AX);
+            uint w1 = cpu.registers.GetRegisterWord(Register.R16_AX);
             uint w2 = multiplier.GetWord(cpu);
             var result = w1 * w2;
 
             cpu.registers.Flags.CF = cpu.registers.Flags.OF = result > ushort.MaxValue;
 
-            cpu.registers.SetRegisterWord(Registers.Register.R16_AX,(ushort)result);
-            cpu.registers.SetRegisterWord(Registers.Register.R16_DX,(ushort)(result>>16));
+            cpu.registers.SetRegisterWord(Register.R16_AX, (ushort)result);
+            cpu.registers.SetRegisterWord(Register.R16_DX, (ushort)(result >> 16));
         }
 
         public override void Execute(CPU cpu)
